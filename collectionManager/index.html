@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Production Book Collection Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="headerLeft">
+    <h1>Book Collection Manager</h1>
+    <p class="sub">Production build (SQL + Images + Paging + Search/Sort)</p>
+  </div>
+  <nav class="headerNav">
+    <button id="openAddBtn" type="button">Add Book</button>
+    <a href="stats.html"><button type="button" class="secondary">View Stats</button></a>
+  </nav>
+</header>
+
+<main>
+  <div id="status" class="status hidden" aria-live="polite"></div>
+
+  <!-- Controls -->
+  <section class="card controls">
+    <div class="controlRow">
+      <label class="control">
+        Search
+        <input id="searchInput" type="search" placeholder="Title or author…" />
+      </label>
+
+      <label class="control">
+        Category
+        <select id="categorySelect">
+          <option value="">All</option>
+        </select>
+      </label>
+
+      <label class="control">
+        Sort
+        <select id="sortSelect">
+          <option value="created_at:desc">Newest</option>
+          <option value="title:asc">Title (A→Z)</option>
+          <option value="title:desc">Title (Z→A)</option>
+          <option value="year:desc">Year (new→old)</option>
+          <option value="year:asc">Year (old→new)</option>
+          <option value="rating:desc">Rating (high→low)</option>
+          <option value="price:asc">Price (low→high)</option>
+          <option value="price:desc">Price (high→low)</option>
+        </select>
+      </label>
+
+      <label class="control">
+        Page size
+        <select id="pageSizeSelect">
+          <option>5</option>
+          <option selected>10</option>
+          <option>20</option>
+          <option>50</option>
+        </select>
+      </label>
+
+      <button id="applyBtn" type="button">Apply</button>
+      <button id="clearBtn" type="button" class="secondary">Clear</button>
+    </div>
+  </section>
+
+  <!-- Add/Edit Form -->
+  <section id="formSection" class="card hidden">
+    <h2 id="formTitle">Add Book</h2>
+
+    <form id="bookForm">
+      <input type="hidden" id="bookId" />
+
+      <div class="formGrid">
+        <label>
+          Title
+          <input id="title" type="text" />
+          <small class="error" id="titleErr"></small>
+        </label>
+
+        <label>
+          Author
+          <input id="author" type="text" />
+          <small class="error" id="authorErr"></small>
+        </label>
+
+        <label>
+          Year
+          <input id="year" type="number" />
+          <small class="error" id="yearErr"></small>
+        </label>
+
+        <label>
+          Category
+          <select id="category">
+            <option>Fantasy</option>
+            <option>Sci-Fi</option>
+            <option>Classic</option>
+            <option>Horror</option>
+            <option>Mystery</option>
+            <option>Non-Fiction</option>
+            <option selected>Other</option>
+          </select>
+          <small class="error" id="categoryErr"></small>
+        </label>
+
+        <label>
+          Rating (0–5)
+          <input id="rating" type="number" step="0.1" min="0" max="5" />
+          <small class="error" id="ratingErr"></small>
+        </label>
+
+        <label>
+          Price ($)
+          <input id="price" type="number" step="0.01" min="0" />
+          <small class="error" id="priceErr"></small>
+        </label>
+
+        <label class="wide">
+          Image URL
+          <input id="imageUrl" type="url" placeholder="https://…" />
+          <small class="hint">If missing/broken, a placeholder will be used.</small>
+          <small class="error" id="imageErr"></small>
+        </label>
+      </div>
+
+      <small class="error" id="serverErr"></small>
+
+      <div class="formActions">
+        <button type="submit" id="saveBtn">Save</button>
+        <button type="button" id="cancelBtn" class="secondary">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- List -->
+  <section id="listView" class="grid"></section>
+
+  <!-- Paging -->
+  <div class="paging">
+    <button id="prevBtn" type="button">Previous</button>
+    <span id="pageIndicator"></span>
+    <button id="nextBtn" type="button">Next</button>
+  </div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
